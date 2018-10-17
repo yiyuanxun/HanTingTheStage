@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.accp.hanting.dao.yyx.YyxHyDao">
+
+	<select id="queryAllUser"   resultType="com.accp.hanting.vo.yyx.hysh">
+        SELECT a.userID,a.userName,a.merchantType,b.userEmail,a.userIntegral,a.userMoney,b.loginType,
+a.auditStatus ,a.stateboolean,a.userPhone,a.recentEntry,a.userSex,a.authentication
+FROM `user` AS a INNER JOIN `login` AS b ON a.userID=b.userID
+<where>
+    <if test="merchantType!=null">
+          a.merchantType =#{merchantType}
+         </if>
+         <if test="userName!=null">
+        and  a.userName like '%${userName}%'
+         </if>
+       </where>
+	</select>
+
+   <select id="queryByUserid"   resultType="com.accp.hanting.vo.yyx.hysh">
+       SELECT a.userID,a.merchantType,b.userEmail,a.userIntegral,a.userMoney,b.loginType,
+a.auditStatus ,a.stateboolean,a.userPhone,a.recentEntry,a.userSex,a.userRealName,a.userName,b.userPwd,a.authentication
+FROM `user` AS a INNER JOIN `login` AS b ON a.userID=b.userID 
+ where a.userID=#{userID}         
+	</select>
+	
+	<select id="queryBymj"  resultType="user">
+	SELECT SUM(userMoney) as usermoney ,SUM(userintegral) as userIntegral FROM `user`
+	</select>
+	
+	<select id="queryComment"  resultType="com.accp.hanting.vo.yyx.comment">
+	SELECT  a.serviceAppraiseID,b.`userName`,c.serviceTitle,a.serviceAppraiseContent,a.serviceAppraiseDate,a.userID
+	FROM `evaluationservice` AS a  INNER JOIN `user` AS b ON a.userID=b.`userID` INNER JOIN `services` AS c
+ON a.serviceID=c.serviceID 
+<where>
+<if test="userID!=null">
+   a.userID=#{userID}	
+</if>
+<if test="userName!=null">
+  and b.`userName` like '%${userName}%'
+</if>
+<if test="serviceTitle!=null">
+  and c.`serviceTitle` like '%${serviceTitle}%'
+</if>
+</where>
+	</select>
+		
+	<delete id="CommentDel"  parameterType="java.util.List">
+		delete from evaluationservice  WHERE serviceAppraiseID in
+  <foreach collection="ids" item="item" index="index" open="(" close=")" separator=",">
+    #{item}
+  </foreach>
+</delete>
+
+	<select id="querySJ"   resultType="com.accp.hanting.vo.yyx.hysh">
+        SELECT a.userID,a.userName,a.merchantType,b.userEmail,a.userIntegral,a.userMoney,b.loginType,
+a.auditStatus ,a.stateboolean,a.userPhone,a.recentEntry,a.userSex,a.authentication,a.shopName
+FROM `user` AS a INNER JOIN `login` AS b ON a.userID=b.userID
+<where>
+         <if test="userName!=null">
+          and  a.userName like '%${userName}%'
+         </if>
+         <if test="shopName!=null">
+          and  a.shopName like '%${shopName}%'
+         </if>  
+          <if test="merchantType!=0">
+          and  a.merchantType =#{merchantType}
+         </if>
+          <if test="merchantType==0">
+        and  a.merchantType !=0
+         </if>
+       </where>
+	</select>
+
+</mapper>

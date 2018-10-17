@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>系统管理</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<meta name="__hash__" content="a33472b777b35a55b3102daa9da57066_80e69d0dd1d5805e5438a14d297840ad" />
+
+<style type="text/css">
+a {
+	text-decoration: none;
+}
+
+td {
+	padding-left: 10px;
+	padding-right: 10px;
+}
+  table        {            border-collapse: collapse;            margin: 0 auto;            text-align: center;        }        
+  table td {            border: 1px solid #cad9ea;            color: #666;            height: 30px;        }        
+ 
+
+
+</style>
+</head>
+
+<body style="margin: 0px;width: 1350px;" scroll="no">
+<table border="0" cellSpacing="0" cellPadding="0" width="100%" height="100%">
+  <tbody>
+  <body class="oneColLiqCtrHdr" style="background-color: #F5FAFA;">
+<style type="text/css">
+.style1 {
+	color: #999999
+}
+</style>
+<div id=container>
+  <div id="header">
+    <H3>会员信息</H3>
+  </DIV>
+  <DIV id="mainContent"><BR>
+    <form action="" method="POST" enctype="multipart/form-data" name="form1" id="form10">
+      <TABLE width="100%" class="tablesorter"  align="center">
+        <TBODY>
+          <TR >
+            <TD width="18%" align=right noWrap><strong>会员组:</strong></TD>
+            <TD  width="32%" noWrap >
+              <span th:if="${User1.merchanttype==0}">普通会员</span> 
+              <span th:if="${User1.merchanttype==1}">大陆商家用户</span> 
+              <span th:if="${User1.merchanttype==2}">海外商家用户</span>            
+            </TD>
+            <TD width="18%" noWrap align=right>&nbsp;</TD>
+            <TD width="32%" noWrap>&nbsp;</TD>
+          </TR>
+          <TR>
+            <TD  align=right noWrap>用户名:</TD>
+            <TD ><span th:text="${User1.username}"></span></TD>
+            <TD  align=right>密码:</TD>
+            <TD  ><input id="password" size=20 type="password" name="password"  th:value="${User1.userPwd}"></TD>
+          </TR>
+          <TR>
+            <TD align=right noWrap>手机:</TD>
+            <TD ><input name="mobile" type="text" class="" id="mobile"  th:value="${User1.userphone}"  maxlength="13"></TD>
+            <TD align=right>邮箱:</TD>
+            <TD >			<!--
+			<input name="email" type="text" id="email" value="" size=40  class="validate[required,custom[email]]">
+			-->
+			<span  th:text="${User1.useremail}"></span>
+			</TD>
+          </TR>
+          <TR>
+            <TD align=right>真实姓名:</TD>
+            <TD ><input name="truename" type="text" id="truename"  th:value="${User1.userrealname}"  size=20  class=""></TD>
+            <TD align=right>性别:</TD>
+            <TD >
+              <label>
+                <input name="userSex" type="radio" id="check_0" value="0"  th:field="${User1.usersex}">男</label>
+              <label>
+                <input type="radio" name="userSex" value="1" id="check_1"  th:field="${User1.usersex}">女</label>
+            </TD>
+          </TR>
+          <TR>
+            <TD align=right>住址:</TD>
+            <TD colspan="3"  align="left" ><select class="sel_f sel_f2 sel_b2" name="countryid" onChange="setarea(this.value, 'shengid')">
+					<option value="399" selected>中国</option><option value="400" >韩国</option><option value="1023" >测试地址</option>				</select>
+				<select class="sel_f sel_f2 sel_b2" name="shengid" id="shengid" onChange="setarea(this.value, 'areaid')">
+					<option value="0">省</option>
+									</select>
+			  <select class="sel_f sel_f2 sel_b2" name="areaid" id="areaid"  >
+					<option value="0">市</option>
+                    			  </select>
+				<input name="address" type="text" class="input_c inf_inc" id="address" value="" size="50"  />
+            </TD>
+          </TR>
+        </tbody>
+      </table>
+	        <TABLE  width="100%" class="tablesorter"  align="center"  style="margin-top: 20px;">
+        <TBODY>
+			<TR>
+            <TD width="18%" align=right noWrap> 注册时间:</TD>
+            <TD  width="32%">
+            2018-10-10 10:47            </TD>
+            <TD  width="18%" align="right">注册 IP:</TD>
+            <TD  width="32%" >43.250.200.63</TD>
+          </TR>
+          <TR>
+            <TD noWrap align=right>最后登录时间:</TD>
+            <TD ><span  th:text="${#dates.format(User1.recententry,'yyyy-MM-dd HH:mm:ss')}"></span> </TD>
+            <TD align="right">最后登录IP:</TD>
+            <TD ></TD>
+          </TR>
+          <TR>
+		  <TR >
+			  <TD noWrap align=right>资料审核:</TD>
+			  <TD >
+              <label>
+                <input name="auditStatus" type="radio" id="check_0" value="1"  th:field="${User1.as}" >已通过审核</label>
+              <label>
+                <input type="radio" name="auditStatus" value="0" id="check_1"  th:field="${User1.as}">未通过审核</label></TD>
+            <TD noWrap align=right>邮箱验证:</TD>
+            <TD >
+              <label>
+                <input name="check" type="radio" id="check_0" value="1"  th:field="${User1.auditStatus}">已通过验证</label>
+              <label>
+                <input type="radio" name="check" value="0" id="check_1"  th:field="${User1.auditStatus}">未通过验证</label>
+            </TD>
+		  </TR>
+
+            <TD><input type="hidden" name="userid" value="332"></TD>
+            <TD colspan="3" >
+              <INPUT id=button3 value="   保存     " type=submit name=button3 class="button white">　
+              <INPUT class="button white" id="add" value="返回" type=button name="add" onClick="history.go(-1)">
+            </TD>
+          </tr>
+        </tbody>
+      </table>
+  
+    <p>&nbsp;</p>
+  </div>
+  
+</div>
+</body>
+<script type="text/javascript" th:src="@{../../js/jquery-1.12.4.js}"></script>
+<script type="text/javascript" th:inline="javascript">
+        </script>
+</html>
